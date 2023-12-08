@@ -13,8 +13,11 @@ import {
 import { Input } from "@/components/ui/input"
 import { SignUpValidation_formSchema } from "@/lib/validation"
 import { z } from "zod"
+import Loader from "@/components/ui/shared/Loader"
 
 const SignUpForm = () => {
+
+    const isLoading = true;
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof SignUpValidation_formSchema>>({
@@ -97,7 +100,16 @@ const SignUpForm = () => {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="shad-button_primary" >Submit</Button>
+                    <Button type="submit" className="shad-button_primary">
+                        {isLoading ? (
+                            <div className="flex-center gap-2">
+                                <Loader /> Loading...
+                            </div>
+
+                        ) : (
+                            "Sign Up"
+                        )}
+                    </Button>
                 </form>
             </div>
 
