@@ -16,11 +16,17 @@ import { Input } from "@/components/ui/input"
 import { SignUpValidation_formSchema } from "@/lib/validation"
 import { z } from "zod"
 import Loader from "@/components/ui/shared/Loader"
-import { createUserAccount } from "@/lib/appwrite/api"
+import { useToast } from "@/components/ui/use-toast"
+import { useCreateUserAccountMutation, useSignInAccountMutation } from "@/lib/react-query/queriesAndMutations"
+
 
 const SignUpForm = () => {
 
-    const isLoading = false;
+    const { toast } = useToast()
+
+    const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccountMutation();
+
+    const { mutateAsync: signInAccount, isLoading: isSigningIn } = useSignInAccountMutation();
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof SignUpValidation_formSchema>>({
@@ -38,6 +44,28 @@ const SignUpForm = () => {
         console.log(values)
         const newUser = await createUserAccount(values);
         console.log("APPWRITE : NEW USER ===> ", newUser)
+
+        if (!newUser) {
+            return toast({
+                title: "Signup Failed. Please try again!",
+            })
+        }
+
+        const session = await signInAccount({
+            email: values.email,
+            password: values.password
+        })
+
+        if (!session) {
+            return toast({
+                title: "Signin Failed. Please try again!",
+            })
+        }
+
+        // Now that, after we have a session, we need to store that session in react context. 
+        // at all times, we need to know that the user is signed in or not
+
+
     }
 
 
@@ -106,7 +134,7 @@ const SignUpForm = () => {
                         )}
                     />
                     <Button type="submit" className="shad-button_primary">
-                        {isLoading ? (
+                        {isCreatingUser ? (
                             <div className="flex-center gap-2">
                                 <Loader /> Loading...
                             </div>
