@@ -1,11 +1,19 @@
 import './globals.css'
-import React from 'react'
+import { Route, Routes } from 'react-router-dom'
 
 const App = () => {
     return (
-        <h1 className="text-3xl font-bold underline">
-            Hello NebulaNetwork!
-        </h1>
+        <main className='flex h-screen'>
+            <Routes>
+                {/* Public Route */}
+                <Route path='/sign-in' element={<SignInForm />} />
+
+
+                {/* Private Route */}
+                <Route index element={<Home />} />
+                {/* defining index: means it is a starting page */}
+            </Routes>
+        </main>
     )
 }
 
