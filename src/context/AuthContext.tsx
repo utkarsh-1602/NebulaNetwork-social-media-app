@@ -90,7 +90,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // checkAuthUser has to be called Whenever we reload our page, and for that we will use useEffect 
     useEffect(() => {
         const cookieFallback = localStorage.getItem("cookieFallback");
-        if (cookieFallback === "[]" || cookieFallback === null || cookieFallback === undefined) {
+        // || cookieFallback === null || cookieFallback === undefined
+        if (cookieFallback === "[]") {
             navigate("/sign-in");
         }
 
