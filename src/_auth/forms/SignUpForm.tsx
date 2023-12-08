@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
 
 import { Button } from '@/components/ui/button'
 import {
@@ -13,23 +12,21 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
-const formSchema = z.object({
-    username: z.string().min(2).max(50),
-})
+import { SignUpValidation_formSchema } from "@/lib/validation"
+import { z } from "zod"
 
 const SignUpForm = () => {
 
     // 1. Define your form.
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof SignUpValidation_formSchema>>({
+        resolver: zodResolver(SignUpValidation_formSchema),
         defaultValues: {
             username: "",
         },
     })
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    function onSubmit(values: z.infer<typeof SignUpValidation_formSchema>) {
         console.log(values)
     }
 
