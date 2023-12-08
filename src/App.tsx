@@ -1,6 +1,8 @@
-import SignInForm from './_auth/forms/SignInForm'
-import './globals.css'
 import { Route, Routes } from 'react-router-dom'
+
+import SignInForm from './_auth/forms/SignInForm'
+import Home from './_root/pages/Home'
+import './globals.css'
 
 const App = () => {
     return (
