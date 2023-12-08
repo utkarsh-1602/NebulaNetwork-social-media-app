@@ -4,7 +4,7 @@ import React from 'react'
 const SignUpForm = () => {
     return (
         <div>
-            <Button>Nebula Network</Button>
+            <Button>SignUp</Button>
         </div>
     )
 }

@@ -7,7 +7,17 @@ const AuthLayout = () => {
     return (
         // This is a react Fragment
         <>
-
+            {
+                isAuthenticated ? (
+                    <Navigate to="/" />
+                ) : (
+                    <>
+                        <section>
+                            <Outlet />
+                        </section>
+                    </>
+                )
+            }
         </>
     )
 }
