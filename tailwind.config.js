@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
-  ],
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+	],
   theme: {
     container: {
       center: true,
@@ -17,19 +17,6 @@ export default {
     },
     extend: {
       colors: {
-        "primary-500": "#877EFF",
-        "primary-600": "#5D5FEF",
-        "secondary-500": "#FFB620",
-        "off-white": "#D0DFFF",
-        red: "#FF5A5A",
-        "dark-1": "#000000",
-        "dark-2": "#09090A",
-        "dark-3": "#101012",
-        "dark-4": "#1F1F22",
-        "light-1": "#FFFFFF",
-        "light-2": "#EFEFEF",
-        "light-3": "#7878A3",
-        "light-4": "#5C5C7B",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -64,16 +51,6 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      screens: {
-        xs: "480px",
-      },
-      width: {
-        420: "420px",
-        465: "465px",
-      },
-      fontFamily: {
-        inter: ["Inter", "sans-serif"],
-      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -95,6 +72,5 @@ export default {
       },
     },
   },
-
+  plugins: [require("tailwindcss-animate")],
 }
-
