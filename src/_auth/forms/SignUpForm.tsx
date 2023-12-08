@@ -38,6 +38,10 @@ const SignUpForm = () => {
         console.log(values)
         const newUser = await createUserAccount(values);
         console.log("APPWRITE : NEW USER ===> ", newUser)
+
+        if (!newUser) {
+            return;
+        }
     }
 
 
