@@ -1,3 +1,4 @@
+import SignInForm from './_auth/forms/SignInForm'
 import './globals.css'
 import { Route, Routes } from 'react-router-dom'
 
