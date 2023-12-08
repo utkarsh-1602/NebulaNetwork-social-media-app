@@ -17,9 +17,12 @@ import { SignUpValidation_formSchema } from "@/lib/validation"
 import { z } from "zod"
 import Loader from "@/components/ui/shared/Loader"
 import { createUserAccount } from "@/lib/appwrite/api"
+import { useToast } from "@/components/ui/use-toast"
+
 
 const SignUpForm = () => {
 
+    const { toast } = useToast()
     const isLoading = false;
 
     // 1. Define your form.
@@ -40,7 +43,9 @@ const SignUpForm = () => {
         console.log("APPWRITE : NEW USER ===> ", newUser)
 
         if (!newUser) {
-            return;
+            return toast({
+                title: "Signup Failed. Please try again!",
+            })
         }
     }
 
