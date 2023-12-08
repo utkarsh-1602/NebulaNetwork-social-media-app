@@ -1,6 +1,8 @@
 // storing the signin Session in react context
+import { getCurrentUser } from "@/lib/appwrite/api";
 import { IUser } from "@/types";
 import React, { createContext, useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 export const INITIAL_USER = {
     id: '',
@@ -37,6 +39,7 @@ const AuthContext = createContext<IContextType>(INITIAL_STATE);
 // It wraps the entier app and provides the access to the context
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
+    const navigate = useNavigate()
     const [user, setUser] = useState<IUser>(INITIAL_USER);
     // user is of type IUser and is set to INITIAL_USER
 
@@ -46,7 +49,25 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const checkAuthUser = async () => {
         try {
             // we will get to the currently logged in user account 
-            const currentAccount = await getCurrentUser()
+            const currentAccount = await getCurrentUser();
+
+            if (currentAccount) {
+                setUser({
+                    id: currentAccount.$id,
+                    name: currentAccount.name,
+                    username: currentAccount.username,
+                    email: currentAccount.email,
+                    imageUrl: currentAccount.imageUrl,
+                    bio: currentAccount.bio,
+                });
+                setIsAuthenticated(true);
+
+                return true;
+            }
+
+            // if current account is not logged in, then return false
+            return false;
+
         } catch (error) {
             console.log("Error: User is not Authenticated", error)
             return false;
@@ -65,6 +86,18 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         checkAuthUser
     }
 
+
+    // checkAuthUser has to be called Whenever we reload our page, and for that we will use useEffect 
+    useEffect(() => {
+        const cookieFallback = localStorage.getItem("cookieFallback");
+
+        if (cookieFallback === "[]" || cookieFallback === null || cookieFallback === undefined) {
+            navigate("/sign-in");
+        }
+
+        checkAuthUser();
+    }, [])
+
     return (
         <AuthContext.Provider value={value}>
             {children}
@@ -72,4 +105,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     )
 }
 
-export default AuthContext
+export default AuthProvider
+
+
+export const useUserContext = () => useContext(AuthContext)
