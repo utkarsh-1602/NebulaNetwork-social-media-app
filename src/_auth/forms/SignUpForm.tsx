@@ -1,5 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { Link } from "react-router-dom"
+
 
 import { Button } from '@/components/ui/button'
 import {
@@ -17,7 +19,7 @@ import Loader from "@/components/ui/shared/Loader"
 
 const SignUpForm = () => {
 
-    const isLoading = true;
+    const isLoading = false;
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof SignUpValidation_formSchema>>({
@@ -45,7 +47,7 @@ const SignUpForm = () => {
                     Create a new account
                 </h2>
                 <p className="text-light-3 small-medium md:base-regular mt-2">
-                    To use Nebula Network, Please enter your details
+                    To use Nebula Network, Please enter your details..
                 </p>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full mt-4">
                     <FormField
@@ -110,6 +112,14 @@ const SignUpForm = () => {
                             "Sign Up"
                         )}
                     </Button>
+                    <p className="text-small-regular text-light-2 text-center mt-2">
+                        Already have an account?
+                        <Link
+                            to="/sign-in"
+                            className="text-primary-500 text-small-semibold ml-1">
+                            Log in
+                        </Link>
+                    </p>
                 </form>
             </div>
 
