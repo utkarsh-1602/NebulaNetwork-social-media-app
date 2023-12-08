@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 
 import { Button } from '@/components/ui/button'
@@ -18,15 +18,20 @@ import { z } from "zod"
 import Loader from "@/components/ui/shared/Loader"
 import { useToast } from "@/components/ui/use-toast"
 import { useCreateUserAccountMutation, useSignInAccountMutation } from "@/lib/react-query/queriesAndMutations"
+import { useUserContext } from "@/context/AuthContext"
 
 
 const SignUpForm = () => {
 
     const { toast } = useToast()
 
+    const navigate = useNavigate()
+
     const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccountMutation();
 
     const { mutateAsync: signInAccount, isLoading: isSigningIn } = useSignInAccountMutation();
+
+    const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof SignUpValidation_formSchema>>({
@@ -64,7 +69,18 @@ const SignUpForm = () => {
 
         // Now that, after we have a session, we need to store that session in react context. 
         // at all times, we need to know that the user is signed in or not
+        const isLoggedIn = await checkAuthUser();
 
+        if (isLoggedIn) {
+            form.reset();
+
+            // we are successfully signed in
+            navigate('/')
+        } else {
+            return toast({
+                title: "Signup Failed. Please try again!",
+            })
+        }
 
     }
 
