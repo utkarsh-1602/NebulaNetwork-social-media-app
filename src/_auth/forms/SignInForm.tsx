@@ -15,10 +15,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { SignInValidation } from "@/lib/validation"
 import { z } from "zod"
-import Loader from "@/components/ui/shared/Loader"
 import { useToast } from "@/components/ui/use-toast"
 import { useSignInAccountMutation } from "@/lib/react-query/queriesAndMutations"
 import { useUserContext } from "@/context/AuthContext"
+import Loader from "@/components/shared/Loader"
 
 
 const SignInForm = () => {

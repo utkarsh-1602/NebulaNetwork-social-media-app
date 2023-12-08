@@ -110,3 +110,4 @@ export async function getCurrentUser() {
         console.log("Error: ", error)
     }
 }
+
