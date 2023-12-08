@@ -13,7 +13,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { SignUpValidation_formSchema } from "@/lib/validation"
+import { SignUpValidation } from "@/lib/validation"
 import { z } from "zod"
 import Loader from "@/components/ui/shared/Loader"
 import { useToast } from "@/components/ui/use-toast"
@@ -34,8 +34,8 @@ const SignUpForm = () => {
     const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
     // 1. Define your form.
-    const form = useForm<z.infer<typeof SignUpValidation_formSchema>>({
-        resolver: zodResolver(SignUpValidation_formSchema),
+    const form = useForm<z.infer<typeof SignUpValidation>>({
+        resolver: zodResolver(SignUpValidation),
         defaultValues: {
             name: '',
             username: '',
@@ -45,7 +45,7 @@ const SignUpForm = () => {
     })
 
     // 2. Define a submit handler.
-    async function onSubmit(values: z.infer<typeof SignUpValidation_formSchema>) {
+    async function onSubmit(values: z.infer<typeof SignUpValidation>) {
         console.log(values)
         const newUser = await createUserAccount(values);
         console.log("APPWRITE : NEW USER ===> ", newUser)
