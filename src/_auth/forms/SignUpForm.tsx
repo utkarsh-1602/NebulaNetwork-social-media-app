@@ -61,6 +61,11 @@ const SignUpForm = () => {
                 title: "Signin Failed. Please try again!",
             })
         }
+
+        // Now that, after we have a session, we need to store that session in react context. 
+        // at all times, we need to know that the user is signed in or not
+
+
     }
 
 
