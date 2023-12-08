@@ -52,7 +52,7 @@ const SignUpForm = () => {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full mt-4">
                     <FormField
                         control={form.control}
-                        name="username"
+                        name="name"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Name</FormLabel>
@@ -78,7 +78,7 @@ const SignUpForm = () => {
                     />
                     <FormField
                         control={form.control}
-                        name="username"
+                        name="email"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Email</FormLabel>
@@ -91,7 +91,7 @@ const SignUpForm = () => {
                     />
                     <FormField
                         control={form.control}
-                        name="username"
+                        name="password"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Password</FormLabel>
