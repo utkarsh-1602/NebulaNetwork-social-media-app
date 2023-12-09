@@ -44,8 +44,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 
     // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof PostValidation>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
+
         console.log(values)
     }
 
