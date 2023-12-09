@@ -15,8 +15,18 @@ import { Textarea } from "@/components/ui/textarea"
 import FileUploader from "../shared/FileUploader"
 import { useNavigate } from "react-router-dom"
 import { PostValidation } from "@/lib/validation";
+import { Models } from "appwrite"
 
-const PostForm = ({ post }) => {
+
+
+type PostFormProps = {
+    post?: Models.Document;
+    action: "Create" | "Update";
+};
+
+
+
+const PostForm = ({ post, action }: PostFormProps) => {
 
     const navigate = useNavigate();
 
@@ -83,7 +93,7 @@ const PostForm = ({ post }) => {
                         <FormItem>
                             <FormLabel className="shad-form_label">Add Location</FormLabel>
                             <FormControl>
-                                <Input type="text" className="shad-input" />
+                                <Input type="text" className="shad-input" {...field} />
                             </FormControl>
                             <FormMessage className="shad-form_message" />
                         </FormItem>
@@ -98,7 +108,7 @@ const PostForm = ({ post }) => {
                         <FormItem>
                             <FormLabel className="shad-form_label">Add Tags (Seperated by comma  " , " )</FormLabel>
                             <FormControl>
-                                <Input type="text" className="shad-input" placeholder="Art, Travel, Work, Dance" />
+                                <Input type="text" className="shad-input" placeholder="Art, Travel, Work, Dance" {...field} />
                             </FormControl>
                             <FormMessage className="shad-form_message" />
                         </FormItem>
