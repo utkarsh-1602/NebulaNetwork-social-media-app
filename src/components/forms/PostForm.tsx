@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -15,20 +14,15 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import FileUploader from "../shared/FileUploader"
 import { useNavigate } from "react-router-dom"
-
-
-
-const formSchema = z.object({
-    username: z.string().min(2).max(50),
-})
+import { PostValidation } from "@/lib/validation";
 
 const PostForm = ({ post }) => {
 
     const navigate = useNavigate();
 
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof PostValidation>>({
+        resolver: zodResolver(PostValidation),
         defaultValues: {
             caption: post ? post?.caption : "", // if the post exists then post?.caption will be the value, and it is optional
             file: [],
@@ -39,7 +33,7 @@ const PostForm = ({ post }) => {
     })
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    function onSubmit(values: z.infer<typeof PostValidation>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values)
