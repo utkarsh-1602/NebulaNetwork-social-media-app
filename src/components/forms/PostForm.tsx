@@ -30,7 +30,11 @@ const PostForm = ({ post }) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: "",
+            caption: post ? post?.caption : "", // if the post exists then post?.caption will be the value, and it is optional
+            file: [],
+            location: post ? post.location : "",
+            tags: post ? post.tags.join(",") : "",
+
         },
     })
 
