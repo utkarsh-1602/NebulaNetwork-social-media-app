@@ -1,26 +1,66 @@
 import { useCallback, useState } from "react";
 import { FileWithPath, useDropzone } from "react-dropzone";
+import { Button } from "../ui/button";
 
 
-const FileUploader = () => {
+type FileUploaderProps = {
+    fieldChange: (files: File[]) => void;
+    mediaUrl: string;
+};
 
 
 
-    const onDrop = useCallback(acceptedFiles => {
-        // Do something with the files
-    }, [])
+const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+    // creating new state for fileURL
+    const [fileUrl, setFileUrl] = useState('')
+
+    const [file, setFile] = useState([])
+
+    // This is the function that will be called when we drop the image 
+    const onDrop = useCallback(
+        (acceptedFiles: FileWithPath[]) => {
+            setFile(acceptedFiles);
+            fieldChange(acceptedFiles);
+            setFileUrl(URL.createObjectURL(acceptedFiles[0]))
+        }, [file])
+
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop,
+        accept: {
+            "image/*": [".png", ".jpeg", ".jpg", ".svg", ".webp"]
+        },
+    })
 
     return (
         <div {...getRootProps()} className="flex flex-center flex-col bg-dark-3 rounded-xl cursor-pointer">
             <input {...getInputProps()} className="cursor-pointer" />
             {
-                isDragActive ?
-                    <p>Drop the files here ...</p> :
-                    <p>Drag 'n' drop some files here, or click to select files</p>
+                fileUrl ? (
+                    <div>
+                        test1
+                    </div>
+                ) : (
+                    <div className="file_uploader-box ">
+                        <img
+                            src="/assets/icons/file-upload.svg"
+                            width={96}
+                            height={77}
+                            alt="file upload"
+                        />
+
+                        <h3 className="base-medium text-light-2 mb-2 mt-6">
+                            Drag photo here
+                        </h3>
+                        <p className="text-light-4 small-regular mb-6">SVG, PNG, JPG</p>
+
+                        <Button type="button" className="shad-button_dark_4">
+                            Select from computer
+                        </Button>
+                    </div>
+                )
             }
-        </div>
+        </div >
     )
 }
 
