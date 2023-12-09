@@ -1,31 +1,26 @@
-# React + TypeScript + Vite
+# Nebula Network Social Media App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Nebula Network Logo](url/to/your/logo.png)
 
-Currently, two official plugins are available:
+Nebula Network is a modern social media app designed with a stunning UI, providing users with a native mobile feel. It incorporates cutting-edge technologies to ensure outstanding performance and features an infinite scroll for a seamless user experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Stunning UI**: Nebula Network boasts a visually appealing user interface that delivers a native mobile experience.
+- **Infinite Scroll**: Enjoy seamless content browsing with our infinite scroll feature, allowing users to explore an endless stream of content effortlessly.
+- **Special Tech Stack**: Leveraging a special tech stack that includes React JS, Appwrite, TypeScript, and more to provide a robust and scalable platform.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Tech Stack
 
-- Configure the top-level `parserOptions` property like this:
+- **React JS**: A powerful JavaScript library for building user interfaces, ensuring a responsive and dynamic app.
+- **Appwrite**: A self-hosted backend server that includes a variety of features, such as authentication, real-time data synchronization, and more.
+- **TypeScript**: Enhance the maintainability and scalability of your code with TypeScript's static typing.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Getting Started
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-# NebulaNetwork-social-media-app
+To get started with Nebula Network, follow these steps:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/nebula-network.git
