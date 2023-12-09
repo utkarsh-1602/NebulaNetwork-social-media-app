@@ -13,16 +13,17 @@ type FileUploaderProps = {
 const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
 
     // creating new state for fileURL
-    const [fileUrl, setFileUrl] = useState('')
+    const [file, setFile] = useState<File[]>([]);
+    const [fileUrl, setFileUrl] = useState<string>(mediaUrl);
 
-    const [file, setFile] = useState([])
+
 
     // This is the function that will be called when we drop the image 
     const onDrop = useCallback(
         (acceptedFiles: FileWithPath[]) => {
             setFile(acceptedFiles);
             fieldChange(acceptedFiles);
-            setFileUrl(URL.createObjectURL(acceptedFiles[0]))
+            setFileUrl(convertFileToUrl(acceptedFiles[0]));
         }, [file])
 
     const { getRootProps, getInputProps } = useDropzone({
