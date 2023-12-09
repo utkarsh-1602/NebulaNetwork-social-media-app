@@ -1,5 +1,5 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPost, createUserAccount, signInAccount, signOutAccount, updatePost } from "../appwrite/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createPost, createUserAccount, getRecentPosts, signInAccount, signOutAccount, updatePost } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
 // useQuery is for fetching the data
@@ -50,5 +50,12 @@ export const useUpdatePost = () => {
                 queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id],
             });
         },
+    });
+};
+
+export const useGetRecentPosts = () => {
+    return useQuery({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+        queryFn: getRecentPosts,
     });
 };
