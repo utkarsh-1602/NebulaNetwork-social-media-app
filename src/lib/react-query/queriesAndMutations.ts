@@ -1,6 +1,7 @@
-import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
-import { createUserAccount, signInAccount, signOutAccount } from "../appwrite/api";
-import { INewUser } from "@/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createPost, createUserAccount, signInAccount, signOutAccount, updatePost } from "../appwrite/api";
+import { INewPost, INewUser, IUpdatePost } from "@/types";
+import { QUERY_KEYS } from "./queryKeys";
 // useQuery is for fetching the data
 // useMutation is for modifying the data
 // useQueryClient is responsible for managing the cache and coordinating data fetching and updating
@@ -24,5 +25,30 @@ export const useSignInAccountMutation = () => {
 export const useSignOutAccount = () => {
     return useMutation({
         mutationFn: signOutAccount,
+    });
+};
+
+export const useCreatePost = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (post: INewPost) => createPost(post),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+            });
+        },
+    });
+};
+
+
+export const useUpdatePost = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (post: IUpdatePost) => updatePost(post),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id],
+            });
+        },
     });
 };
