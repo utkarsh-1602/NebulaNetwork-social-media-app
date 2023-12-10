@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getInfinitePosts, getPostById, getRecentPosts, getUserPosts, likePost, savePost, searchPosts, signInAccount, signOutAccount, updatePost } from "../appwrite/api";
-import { INewPost, INewUser, IUpdatePost } from "@/types";
+import { createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getInfinitePosts, getPostById, getRecentPosts, getUserById, getUserPosts, getUsers, likePost, savePost, searchPosts, signInAccount, signOutAccount, updatePost, updateUser } from "../appwrite/api";
+import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
 // useQuery is for fetching the data
 // useMutation is for modifying the data
@@ -165,20 +165,19 @@ export const useGetUserPosts = (userId?: string) => {
 export const useGetPosts = () => {
     return useInfiniteQuery({
         queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-        queryFn: getInfinitePosts,
-        // Now we are implementing the logic of pagination
-        getNextPageParam: (lastPage) => {
-            // If there's no data, there are no more pages.
-            if (lastPage && lastPage.documents.length === 0) {
+        queryFn: getInfinitePosts as any,
+        getNextPageParam: (lastPage: any) => {
+            if (!lastPage || lastPage.documents.length === 0) {
                 return null;
             }
 
-            // To find the Id of the last page
             const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
             return lastId;
         },
+        initialPageParam: null, // Set initialPageParam to null
     });
 };
+
 
 export const useSearchPosts = (searchTerm: string) => {
     return useQuery({
@@ -189,4 +188,35 @@ export const useSearchPosts = (searchTerm: string) => {
         enabled: !!searchTerm
     })
 
+}
+
+export const useGetUsers = (limit?: number) => {
+    return useQuery({
+        queryKey: [QUERY_KEYS.GET_USERS],
+        queryFn: () => getUsers(limit),
+    })
+}
+
+
+export const useGetUserById = (userId: string) => {
+    return useQuery({
+        queryKey: [QUERY_KEYS.GET_USER_BY_ID, userId],
+        queryFn: () => getUserById(userId),
+        enabled: !!userId,
+    })
+}
+
+export const useUpdateUser = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (user: IUpdateUser) => updateUser(user),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+            })
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_USER_BY_ID, data?.$id],
+            })
+        },
+    })
 }
