@@ -382,3 +382,69 @@ export async function deletePost(postId?: string, imageId?: string) {
         console.log(error);
     }
 }
+
+
+export async function getUserPosts(userId?: string) {
+    if (!userId) return;
+
+    try {
+        const post = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.postCollectionId,
+            [Query.equal("creator", userId), Query.orderDesc("$createdAt")]
+        );
+
+        if (!post) throw Error;
+
+        return post;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
+
+    const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(9)];
+
+    if (pageParam) {
+        queries.push(Query.cursorAfter(pageParam.toString()));
+        // if we are page 2, then skip the content of page1 and give me directly page 2 content by doing Query.cursorAfter
+    }
+
+    try {
+
+        const posts = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.postCollectionId,
+            queries
+        );
+
+        if (!posts) throw Error;
+
+        return posts;
+
+    } catch (error) {
+        console.log("getInfinitePosts_ERROR : ", error);
+    }
+
+}
+
+export async function searchPosts(searchTerm: string) {
+    try {
+
+        const posts = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.postCollectionId,
+            [Query.search('caption', searchTerm)]
+        );
+
+        if (!posts) throw Error;
+
+        return posts;
+
+    } catch (error) {
+        console.log("searchPosts_ERROR : ", error);
+    }
+
+}
