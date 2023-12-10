@@ -2,6 +2,11 @@
 
 Nebula Network is a modern social media app designed with a stunning UI, providing users with a native mobile feel. It incorporates cutting-edge technologies to ensure outstanding performance and features an infinite scroll for a seamless user experience.
 
+![Sign up](screenshots/signuppage.png)
+![Sign in](screenshots/loginpage.png)
+![Home](screenshots/homepage.png)
+
+
 ## Features
 
 - **Stunning UI**: Nebula Network boasts a visually appealing user interface that delivers a native mobile experience.
