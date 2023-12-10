@@ -1,5 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getPostById, getRecentPosts, getUserPosts, likePost, savePost, signInAccount, signOutAccount, updatePost } from "../appwrite/api";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getInfinitePosts, getPostById, getRecentPosts, getUserPosts, likePost, savePost, searchPosts, signInAccount, signOutAccount, updatePost } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
 // useQuery is for fetching the data
@@ -161,3 +161,32 @@ export const useGetUserPosts = (userId?: string) => {
         enabled: !!userId,
     });
 };
+
+export const useGetPosts = () => {
+    return useInfiniteQuery({
+        queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+        queryFn: getInfinitePosts,
+        // Now we are implementing the logic of pagination
+        getNextPageParam: (lastPage) => {
+            // If there's no data, there are no more pages.
+            if (lastPage && lastPage.documents.length === 0) {
+                return null;
+            }
+
+            // To find the Id of the last page
+            const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+            return lastId;
+        },
+    });
+};
+
+export const useSearchPosts = (searchTerm: string) => {
+    return useQuery({
+        queryKey: [QUERY_KEYS.SEARCH_POSTS],
+        queryFn: () => searchPosts(searchTerm), // why we are using a callback function here 
+
+        // Now when is it going to be automatically refetch, it will refetch when the search term changes
+        enabled: !!searchTerm
+    })
+
+}
