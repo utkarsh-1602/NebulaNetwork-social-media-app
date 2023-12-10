@@ -1,13 +1,37 @@
 import GridPostList from '@/components/shared/GridPostList'
 import Loader from '@/components/shared/Loader'
-import SearchResults from '@/components/shared/SearchResults'
 import { Input } from '@/components/ui/input'
 import useDebounce from '@/hooks/useDebounce'
 import { useGetPosts, useSearchPosts } from '@/lib/react-query/queriesAndMutations'
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
+
+
+export type SearchResultProps = {
+    isSearchFetching: boolean;
+    searchedPosts: any
+};
+
+const SearchResults = ({ isSearchFetching, searchedPosts }: SearchResultProps) => {
+
+    if (isSearchFetching) {
+        return <Loader />;
+    } else if (searchedPosts && searchedPosts.documents.length > 0) {
+        return <GridPostList posts={searchedPosts.documents} />;
+    } else {
+
+
+
+        return (
+            <p className="text-light-4 mt-10 text-center w-full">No results found</p>
+        );
+    }
+
+}
 
 const Explore = () => {
 
+    const { ref, inView } = useInView();
 
     const [searchValue, setSearchValue] = useState('')
 
@@ -18,6 +42,15 @@ const Explore = () => {
     const { data: searchedPosts, isFetching: isSearchFetching } = useSearchPosts(debouncedSearch);
 
     console.log("POSTSSSSSS =>>> ", posts)
+
+
+    useEffect(() => {
+        if (inView && !searchValue) {
+            fetchNextPage();
+        }
+    }, [inView, searchValue]);
+
+
 
     if (!posts) {
         return (
@@ -87,9 +120,10 @@ const Explore = () => {
             </div>
 
             {hasNextPage && !searchValue && (
-                // <div ref={ref} className="mt-10">
-                <Loader />
-                // </div>
+                // ref means we are at the bottom of the page
+                <div ref={ref} className="mt-10">
+                    <Loader />
+                </div>
             )}
         </div>
     )

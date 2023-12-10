@@ -182,7 +182,7 @@ export const useGetPosts = () => {
 
 export const useSearchPosts = (searchTerm: string) => {
     return useQuery({
-        queryKey: [QUERY_KEYS.SEARCH_POSTS],
+        queryKey: [QUERY_KEYS.SEARCH_POSTS, searchTerm],
         queryFn: () => searchPosts(searchTerm), // why we are using a callback function here 
 
         // Now when is it going to be automatically refetch, it will refetch when the search term changes
