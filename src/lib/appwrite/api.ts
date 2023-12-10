@@ -402,3 +402,8 @@ export async function getUserPosts(userId?: string) {
     }
 }
 
+
+export aaync functino getInfinitePosts({ pageParam }: { pageParams: Number }){
+
+    const queries: any[] = [Query.orderDesc('$updateAt'), Query.limit(20)]
+}
