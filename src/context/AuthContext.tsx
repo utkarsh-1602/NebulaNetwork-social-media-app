@@ -69,7 +69,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             return false;
 
         } catch (error) {
-            console.log("Error: User is not Authenticated", error)
             return false;
         } finally {
             setIsLoading(false);

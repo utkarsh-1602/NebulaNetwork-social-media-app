@@ -42,15 +42,12 @@ const SignInForm = () => {
 
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof SignInValidation>) {
-        console.log(values)
 
         const session = await signInAccount({
             email: values.email,
             password: values.password
         })
 
-        console.log({ session })
-        console.log(session)
 
 
         if (!session) {
@@ -63,12 +60,9 @@ const SignInForm = () => {
         // at all times, we need to know that the user is signed in or not
         const isLoggedIn = await checkAuthUser();
 
-        console.log({ isLoggedIn })
 
         if (isLoggedIn) {
             form.reset();
-
-            console.log("NAVIGATING")
 
             // we are successfully signed in
             navigate('/')
