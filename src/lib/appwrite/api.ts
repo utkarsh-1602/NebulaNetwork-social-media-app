@@ -425,7 +425,7 @@ export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
         return posts;
 
     } catch (error) {
-        console.log("getInfinitePosts_ERROR : ", error);
+        console.log("getInfinitePosts_ERRORE : ", error);
     }
 
 }

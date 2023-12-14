@@ -11,6 +11,18 @@ const Home = () => {
     const { data: posts, isLoading: isPostLoading, isError: isErrorPosts } = useGetRecentPosts()
     const { data: creators, isLoading: isUserLoading, isError: isErrorCreators } = useGetUsers(10)
 
+    console.log("useGetRecentPosts =============> ")
+    console.log("POSTS ==> ", posts)
+    console.log("isPostLoading ==> ", isPostLoading)
+    console.log("isErrorPosts =====> ", isErrorPosts)
+
+
+    console.log("useGetRecentPosts =============> ")
+    console.log("POSTS ==> ", posts)
+    console.log("isPostLoading ==> ", isPostLoading)
+    console.log("isErrorPosts =====> ", isErrorPosts)
+
+
     if (isErrorPosts || isErrorCreators) {
         return (
             <div className="flex flex-1">

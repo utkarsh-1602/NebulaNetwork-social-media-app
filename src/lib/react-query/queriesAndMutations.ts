@@ -53,6 +53,11 @@ export const useUpdatePost = () => {
     });
 };
 
+// querykey - At its core, TanStack Query manages query caching for you based on query keys. Query keys have to be an Array at the top level, and can be as simple as an Array with a single string, or as complex as an array of many strings and nested objects. As long as the query key is serializable, and unique to the query's data, you can use it!
+
+
+// queryfn -Required, but only if no default query function has been defined See Default Query Function for more information.The function that the query will use to request data.
+
 export const useGetRecentPosts = () => {
     return useQuery({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
